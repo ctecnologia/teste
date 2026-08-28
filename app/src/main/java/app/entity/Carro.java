@@ -23,6 +23,8 @@ import lombok.Setter;
 @Entity
 public class Carro {
 
+	//Teste de GitHub
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
