@@ -17,13 +17,13 @@ public class CarroService {
 	
 	public String save(Carro carro) {
 		this.carroRespository.save(carro);
-		return "Carro salvo com sucesso!";
+		return carro.getNome()+" salvo com sucesso!";
 	}
 	
 	public String update(Carro carro, long id) {
 		carro.setId(id);
 		this.carroRespository.save(carro);
-		return "Carro atualizado com sucesso!";
+		return carro.getNome()+" atualizado com sucesso!";
 	}
 	
 	public String delete(long id) {
@@ -53,5 +53,15 @@ public class CarroService {
 	
 	public List<Carro> findAcimaAno(int ano){
 		return this.carroRespository.findAcimaAno(ano);
+	}
+	
+	public int somar(List<Integer> lista) {
+		int soma = 0;
+		
+		for (int i = 0; i < lista.size(); i++) {
+			//if(lista.get(i) != null)
+			soma+= lista.get(i);			
+		}
+		return soma;
 	}
 }

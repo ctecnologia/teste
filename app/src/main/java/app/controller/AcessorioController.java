@@ -15,68 +15,69 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import app.entity.Marca;
-import app.service.MarcaService;
+import app.entity.Acessorio;
+import app.service.AcessorioService;
 import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/marca")
+@RequestMapping("/api/acessorio")
 @CrossOrigin("*")
-public class MarcaController {
+public class AcessorioController {
 
-	private final MarcaService marcaService;
+	private final AcessorioService acessorioService;
 	
-	@PreAuthorize("hasRole('USER')")
+	//Permisao de acesso pelo endpoint ou pelo SecurityConfig na securityFilter
+	@PreAuthorize("hasRole('ADMIN')")
 	@PostMapping("/save")
-	public ResponseEntity<String> save(@RequestBody Marca marca) {
+	public ResponseEntity<String> save(@RequestBody Acessorio acessorio) {
 		try {
-			String mensagem = this.marcaService.save(marca);
+			String mensagem = this.acessorioService.save(acessorio);
 			return new ResponseEntity<>(mensagem, HttpStatus.CREATED);
 		} catch (Exception e) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 	}
 	
-	@PreAuthorize("hasRole('USER')")
+	@PreAuthorize("hasAnyRole('ADMIN', 'USER')")
 	@PutMapping("/update/{id}")
-	public ResponseEntity<String> update(@RequestBody Marca marca, @PathVariable Long id) {
+	public ResponseEntity<String> update(@RequestBody Acessorio acessorio, @PathVariable Long id) {
 		try {
-			String mensagem = this.marcaService.update(marca, id);
+			String mensagem = this.acessorioService.update(acessorio, id);
 			return new ResponseEntity<>(mensagem, HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 	}
 	
-	@PreAuthorize("hasRole('USER')")
+	@PreAuthorize("hasAnyRole('ADMIN', 'USER')")
 	@DeleteMapping("/delete/{id}")
 	public ResponseEntity<String> delete(@PathVariable Long id) {
 		try {
-			String mensagem = this.marcaService.delete(id);
+			String mensagem = this.acessorioService.delete(id);
 			return new ResponseEntity<>(mensagem, HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 	}
 	
-	@PreAuthorize("hasRole('USER')")
+	@PreAuthorize("hasAnyRole('ADMIN', 'USER')")
 	@GetMapping("/findAll")
-	public ResponseEntity<List<Marca>> findAll() {
+	public ResponseEntity<List<Acessorio>> findAll() {
 		try {
-			List<Marca> lista = this.marcaService.findAll();
+			List<Acessorio> lista = this.acessorioService.findAll();
 			return new ResponseEntity<>(lista, HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 	}
-
-	@PreAuthorize("hasRole('USER')")
+	
+	@PreAuthorize("hasAnyRole('ADMIN', 'USER')")
 	@GetMapping("/findById/{id}")
-	public ResponseEntity<Marca> findById(@PathVariable Long id) {
+	public ResponseEntity<Acessorio> findById(@PathVariable Long id) {
 		try {
-			Marca marca = this.marcaService.findById(id);
-			return new ResponseEntity<>(marca, HttpStatus.OK);
+			Acessorio acessorio = this.acessorioService.findById(id);
+			return new ResponseEntity<>(acessorio, HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}

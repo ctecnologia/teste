@@ -16,13 +16,13 @@ public class MarcaService {
 	
 	public String save(Marca marca) {
 		this.marcaRepository.save(marca);
-		return "Marca salvo com sucesso!";
+		return marca.getNome()+" salvo com sucesso!";
 	}
 	
 	public String update(Marca marca, Long id) {
 		marca.setId(id);
 		this.marcaRepository.save(marca);
-		return "Marca atualizado com sucesso!";
+		return marca.getNome()+" atualizado com sucesso!";
 	}
 	
 	public String delete(Long id) {

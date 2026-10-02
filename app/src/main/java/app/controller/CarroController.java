@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,20 +23,24 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/carro")
+@CrossOrigin("*")
 public class CarroController {
 
 	private final CarroService carroService;
 
+	@PreAuthorize("hasRole('ADMIN')")
 	@PostMapping("/save")
 	public ResponseEntity<String> save(@RequestBody Carro carro) {
 		try {
 			String mensagem = this.carroService.save(carro);
 			return new ResponseEntity<>(mensagem, HttpStatus.CREATED);
 		} catch (Exception e) {
+			 e.printStackTrace(); // importante
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 	}
 
+	@PreAuthorize("hasRole('ADMIN')")
 	@PutMapping("/update/{id}")
 	public ResponseEntity<String> update(@RequestBody Carro carro, @PathVariable Long id) {
 		try {
@@ -45,6 +51,7 @@ public class CarroController {
 		}
 	}
 
+	@PreAuthorize("hasRole('ADMIN')")
 	@DeleteMapping("/delete/{id}")
 	public ResponseEntity<String> delete(@PathVariable Long id) {
 		try {
@@ -55,6 +62,7 @@ public class CarroController {
 		}
 	}
 
+	@PreAuthorize("hasRole('ADMIN')")
 	@GetMapping("/findAll")
 	public ResponseEntity<List<Carro>> findAll() {
 		try {
@@ -65,6 +73,7 @@ public class CarroController {
 		}
 	}
 
+	@PreAuthorize("hasRole('ADMIN')")
 	@GetMapping("/findById/{id}")
 	public ResponseEntity<Carro> findById(@PathVariable Long id) {
 		try {
@@ -75,6 +84,7 @@ public class CarroController {
 		}
 	}
 	
+	@PreAuthorize("hasRole('ADMIN')")
 	@GetMapping("/findByNome")
 	public ResponseEntity<List<Carro>> findByNome(@RequestParam String nome) {
 		try {
@@ -85,6 +95,7 @@ public class CarroController {
 		}
 	}
 	
+	@PreAuthorize("hasRole('ADMIN')")
 	@GetMapping("/findByMarca")
 	public ResponseEntity<List<Carro>> findByMarca(@RequestParam Long idMarca) {
 		try {
@@ -95,6 +106,7 @@ public class CarroController {
 		}
 	}
 	
+	@PreAuthorize("hasRole('ADMIN')")
 	@GetMapping("/findAcimaAno")
 	public ResponseEntity<List<Carro>> findAcimaAno(@RequestParam int ano){
 		try {

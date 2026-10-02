@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,6 +25,7 @@ public class ProprietarioController {
 
 	private final ProprietarioService proprietarioService;
 	
+	@PreAuthorize("hasAnyRole('ADMIN', 'USER')")
 	@PostMapping("/save")
 	public ResponseEntity<String> save(@RequestBody Proprietario proprietatio) {
 		try {
@@ -34,6 +36,7 @@ public class ProprietarioController {
 		}
 	}
 	
+	@PreAuthorize("hasAnyRole('ADMIN', 'USER')")
 	@PutMapping("/update/{id}")
 	public ResponseEntity<String> update(@RequestBody Proprietario proprietatio, @PathVariable Long id) {
 		try {
@@ -44,6 +47,7 @@ public class ProprietarioController {
 		}
 	}
 	
+	@PreAuthorize("hasAnyRole('ADMIN', 'USER')")
 	@DeleteMapping("/delete/{id}")
 	public ResponseEntity<String> delete(@PathVariable long id) {
 		try {
@@ -54,6 +58,7 @@ public class ProprietarioController {
 		}
 	}
 	
+	@PreAuthorize("hasAnyRole('ADMIN', 'USER')")
 	@GetMapping("/findAll")
 	public ResponseEntity<List<Proprietario>> findAll() {
 		try {
@@ -64,6 +69,7 @@ public class ProprietarioController {
 		}
 	}
 	
+	@PreAuthorize("hasAnyRole('ADMIN', 'USER')")
 	@GetMapping("/findById/{id}")
 	public ResponseEntity<Proprietario> findById(@PathVariable Long id) {
 		try {
